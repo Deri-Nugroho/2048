@@ -79,8 +79,8 @@ ssh -i workshop.pem ubuntu@<EC2-PUBLIC-IP>
 ### STEP 2 — Clone Repo Workshop
 
 ```bash
-git clone https://github.com/Deri-Nugroho/Testing.git
-cd Testing
+git clone https://github.com/Deri-Nugroho/2048.git
+cd 2048
 ls
 ```
 
@@ -177,7 +177,7 @@ git push origin main
 ```
 
 **Pantau progress pipeline:**
-1. Buka `github.com/<username>/Testing`
+1. Buka `github.com/<username>/2048`
 2. Klik tab **Actions**
 3. Klik workflow run terbaru
 4. Lihat log real-time — ada **2 job**: `Build Docker Image` → `Deploy to K3s via SSH`
