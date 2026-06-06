@@ -2,3 +2,5 @@ fastapi
 uvicorn[standard]
 numpy
 easy_logs
+jinja2
+aiofiles
