@@ -88,6 +88,9 @@ jobs:
             kubectl delete deployment game-2048 --ignore-not-found
             kubectl delete svc game-2048-svc --ignore-not-found
 
+            echo "==> Menunggu Traefik (Ingress Controller) siap..."
+            kubectl wait --for=condition=Ready pods -l app.kubernetes.io/name=traefik -n kube-system --timeout=120s || echo "Traefik belum siap, tapi lanjut..."
+
             echo "==> Applying K8s manifests..."
             # Terapkan konfigurasi Deployment, Service, dan Ingress dari folder k8s
             kubectl apply -f ~/workshop-k3s/k8s/deployment.yaml --validate=false
