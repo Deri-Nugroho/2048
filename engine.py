@@ -1,5 +1,5 @@
 import numpy as np
-from miskibin import get_logger
+from easy_logs import get_logger
 from logging import Logger
 from enum import Enum
 import os
