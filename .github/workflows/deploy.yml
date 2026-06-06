@@ -84,17 +84,24 @@ jobs:
             echo "==> Cek K3s service running..."
             sudo systemctl is-active k3s || (echo "K3s tidak running! Mencoba restart..." && sudo systemctl restart k3s && sleep 20)
 
+            echo "==> Membersihkan resource lama (jika ada)..."
+            kubectl delete deployment game-2048 --ignore-not-found
+            kubectl delete svc game-2048-svc --ignore-not-found
+
             echo "==> Applying K8s manifests..."
-            # Terapkan konfigurasi Deployment dan Service dari folder k8s
-            kubectl apply -f ~/workshop-k3s/k8s/manifest.yaml --validate=false
+            # Terapkan konfigurasi Deployment, Service, dan Ingress dari folder k8s
+            kubectl apply -f ~/workshop-k3s/k8s/deployment.yaml --validate=false
+            kubectl apply -f ~/workshop-k3s/k8s/service.yaml --validate=false
+            kubectl apply -f ~/workshop-k3s/k8s/ingress.yaml --validate=false
 
             echo "==> Force pull image terbaru..."
             # Wajib dilakukan agar K3s menarik image 'latest' yang baru saja di-push dari Job 1
-            kubectl rollout restart deployment/game-2048
+            kubectl rollout restart deployment/workshop-app
 
             echo "==> Waiting for rollout..."
-            kubectl rollout status deployment/game-2048 --timeout=120s
+            kubectl rollout status deployment/workshop-app --timeout=120s
 
             echo "==> Status akhir:"
-            kubectl get pods -l app=game-2048
-            kubectl get svc game-2048-svc
+            kubectl get pods -l app=workshop-app
+            kubectl get svc workshop-app
+            kubectl get ingress workshop-app
